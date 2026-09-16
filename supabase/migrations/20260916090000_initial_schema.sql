@@ -74,7 +74,10 @@ create table public.students (
   id            uuid primary key default gen_random_uuid(),
   student_code  text not null unique check (student_code ~ '^[A-Za-z0-9_-]{3,32}$'),
   full_name     text not null check (length(btrim(full_name)) between 2 and 120),
-  date_of_birth date check (date_of_birth is null or (date_of_birth > '1990-01-01' and date_of_birth < current_date)),
+  -- Bounds only. current_date is not immutable and Postgres will not accept a
+  -- non-immutable expression in a CHECK constraint; "not in the future" is
+  -- enforced by the Zod schema on the way in.
+  date_of_birth date check (date_of_birth is null or date_of_birth between '1990-01-01' and '2100-01-01'),
   gender        public.student_gender,
   class_id      uuid references public.classes (id) on delete set null,
   photo_url     text,

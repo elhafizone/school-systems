@@ -148,15 +148,21 @@ create policy profiles_select_admin on public.profiles
   for select to authenticated
   using (public.is_admin());
 
--- A user may edit their own name, phone and avatar. The WITH CHECK clause
--- pins role and is_active so a teacher cannot promote themselves to admin.
+-- A user may edit their own name, phone and avatar. The WITH CHECK clause pins
+-- role and is_active, so a teacher cannot promote themselves to admin.
+--
+-- The comparison goes through auth_role() rather than a sub-select on
+-- profiles. A policy on profiles that queries profiles re-enters this same
+-- policy and Postgres aborts with "infinite recursion detected in policy".
+-- auth_role() is SECURITY DEFINER, so it reads the row with RLS bypassed and
+-- the recursion never starts.
 create policy profiles_update_self on public.profiles
   for update to authenticated
   using (id = auth.uid())
   with check (
     id = auth.uid()
-    and role = (select p.role from public.profiles p where p.id = auth.uid())
-    and is_active = (select p.is_active from public.profiles p where p.id = auth.uid())
+    and role = public.auth_role()
+    and is_active
   );
 
 create policy profiles_admin_all on public.profiles

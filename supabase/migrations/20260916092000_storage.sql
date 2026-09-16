@@ -35,7 +35,7 @@ on conflict (id) do update
 create or replace function public.student_id_from_storage_path(object_name text)
 returns uuid
 language plpgsql
-immutable
+stable
 as $fn$
 declare
   parts text[];

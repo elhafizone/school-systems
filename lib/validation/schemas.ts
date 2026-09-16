@@ -31,10 +31,20 @@ export const studentCodeSchema = z
 export const studentSchema = z.object({
   student_code: studentCodeSchema,
   full_name: trimmed(2, 120, 'Full name'),
+  // The DB constraint can only carry immutable bounds, so the "not in the
+  // future" rule is enforced here.
   date_of_birth: z
     .union([z.iso.date(), z.literal('')])
     .optional()
-    .transform((v) => (v ? v : null)),
+    .transform((v) => (v ? v : null))
+    .refine(
+      (v) => v === null || new Date(v) <= new Date(),
+      'Date of birth cannot be in the future.',
+    )
+    .refine(
+      (v) => v === null || new Date(v) >= new Date('1990-01-01'),
+      'Date of birth looks too far in the past.',
+    ),
   gender: z
     .union([z.enum(['male', 'female']), z.literal('')])
     .optional()
