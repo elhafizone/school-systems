@@ -1,9 +1,11 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Emits .next/standalone with a self-contained server.js, which is what the
-  // Hostinger Node.js runtime starts. Keeps the deployed bundle small.
-  output: 'standalone',
+  // Left on the default build output rather than 'standalone'. Hostinger's
+  // managed Node.js runtime starts the app with `next start`, which refuses to
+  // run against a standalone build — that mode expects you to launch
+  // .next/standalone/server.js yourself. Compatibility with the host matters
+  // more here than the smaller bundle standalone would give.
 
   // Never let a private page reach a search index, and apply the usual
   // hardening headers. `noindex` is set globally because every route behind
