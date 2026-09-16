@@ -1,0 +1,94 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens.
+ *
+ * One restrained palette, one type scale, one spacing rhythm. The product is a
+ * school administration tool used quickly during a working day, so the visual
+ * system stays quiet and legible rather than decorative.
+ *
+ * Every foreground/background pair below meets WCAG AA at its intended size.
+ */
+@theme {
+  --color-ink-900: #0f172a;
+  --color-ink-700: #334155;
+  --color-ink-500: #64748b;
+  --color-ink-300: #cbd5e1;
+  --color-ink-100: #e2e8f0;
+  --color-ink-50: #f8fafc;
+
+  --color-brand-700: #1d4ed8;
+  --color-brand-600: #2563eb;
+  --color-brand-50: #eff6ff;
+
+  --color-danger-700: #b91c1c;
+  --color-danger-600: #dc2626;
+  --color-danger-50: #fef2f2;
+
+  --color-success-700: #15803d;
+  --color-success-50: #f0fdf4;
+
+  --color-warning-700: #a16207;
+  --color-warning-50: #fefce8;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+
+  --radius-control: 0.5rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink-50);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    /* Avoids the iOS zoom-on-focus jump at the 16px threshold. */
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /*
+   * A single visible focus treatment everywhere. Keyboard users must always be
+   * able to see where they are; this is never removed for aesthetics.
+   */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Respect a reduced-motion preference rather than animating regardless. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Jump-to-content target, visible only once focused. */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--color-brand-700);
+    color: white;
+    border-radius: 0 0 var(--radius-control) 0;
+  }
+
+  .skip-link:focus {
+    left: 0;
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "school-systems",
+  "version": "1.0.0",
+  "description": "Student tracking portal for an elementary school.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test:security": "node tests/security.test.mjs",
+    "test:rls": "node tests/rls.test.mjs",
+    "seed": "node scripts/seed.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elhafizone/school-systems.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elhafizone/school-systems/issues"
+  },
+  "homepage": "https://github.com/elhafizone/school-systems#readme",
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.116.0",
+    "next": "^16.3.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.20.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.5",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}
