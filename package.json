@@ -9,8 +9,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test:security": "node tests/security.test.mjs",
-    "test:rls": "node tests/rls.test.mjs",
-    "seed": "node scripts/seed.mjs"
+    "seed": "node scripts/seed.mjs",
+    "test": "node tests/security.test.mjs"
   },
   "repository": {
     "type": "git",
